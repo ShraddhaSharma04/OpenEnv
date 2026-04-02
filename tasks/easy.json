@@ -1,0 +1,44 @@
+[
+  {
+    "task_id": "easy_1",
+    "difficulty": "easy",
+    "customer_type": "individual",
+    "product": "mobile app",
+    "message": "App crashes every time I try to log in.",
+    "previous_status": "open",
+    "expected_output": {
+      "category": "technical_issue",
+      "priority": "medium",
+      "assigned_team": "app_support",
+      "next_action_keywords": ["login", "crash", "reproduce"]
+    }
+  },
+  {
+    "task_id": "easy_2",
+    "difficulty": "easy",
+    "customer_type": "individual",
+    "product": "billing portal",
+    "message": "I was charged twice for the same monthly subscription.",
+    "previous_status": "open",
+    "expected_output": {
+      "category": "billing_issue",
+      "priority": "high",
+      "assigned_team": "billing_support",
+      "next_action_keywords": ["double", "charge", "refund"]
+    }
+  },
+  {
+    "task_id": "easy_3",
+    "difficulty": "easy",
+    "customer_type": "individual",
+    "product": "web dashboard",
+    "message": "I forgot my password and I cannot sign in.",
+    "previous_status": "open",
+    "expected_output": {
+      "category": "account_access",
+      "priority": "medium",
+      "assigned_team": "account_support",
+      "next_action_keywords": ["password", "reset", "sign in"]
+    }
+  }
+]

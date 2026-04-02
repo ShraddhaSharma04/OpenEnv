@@ -1,0 +1,44 @@
+[
+  {
+    "task_id": "medium_1",
+    "difficulty": "medium",
+    "customer_type": "premium",
+    "product": "reporting dashboard",
+    "message": "I upgraded to premium yesterday, but I still cannot export reports from the dashboard.",
+    "previous_status": "open",
+    "expected_output": {
+      "category": "account_access",
+      "priority": "high",
+      "assigned_team": "subscription_support",
+      "next_action_keywords": ["premium", "export", "permissions"]
+    }
+  },
+  {
+    "task_id": "medium_2",
+    "difficulty": "medium",
+    "customer_type": "business",
+    "product": "invoice portal",
+    "message": "Our team can view invoices but downloading the PDF fails with an error after the recent update.",
+    "previous_status": "open",
+    "expected_output": {
+      "category": "technical_issue",
+      "priority": "high",
+      "assigned_team": "platform_support",
+      "next_action_keywords": ["invoice", "pdf", "update"]
+    }
+  },
+  {
+    "task_id": "medium_3",
+    "difficulty": "medium",
+    "customer_type": "premium",
+    "product": "subscription portal",
+    "message": "I changed my plan this morning, but the new features are still locked for my account.",
+    "previous_status": "pending",
+    "expected_output": {
+      "category": "subscription_issue",
+      "priority": "medium",
+      "assigned_team": "subscription_support",
+      "next_action_keywords": ["plan", "features", "sync"]
+    }
+  }
+]

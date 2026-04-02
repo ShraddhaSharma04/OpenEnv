@@ -1,0 +1,44 @@
+[
+  {
+    "task_id": "hard_1",
+    "difficulty": "hard",
+    "customer_type": "enterprise",
+    "product": "finance dashboard",
+    "message": "Our finance team cannot export invoices, the dashboard is unusually slow, and some users lost role-based access after the last update.",
+    "previous_status": "escalated",
+    "expected_output": {
+      "category": "enterprise_platform_issue",
+      "priority": "high",
+      "assigned_team": "enterprise_tech_support",
+      "next_action_keywords": ["roles", "export", "latency"]
+    }
+  },
+  {
+    "task_id": "hard_2",
+    "difficulty": "hard",
+    "customer_type": "enterprise",
+    "product": "admin console",
+    "message": "After our SSO configuration change, several managers cannot access the admin console, while audit logs are also missing for some actions.",
+    "previous_status": "escalated",
+    "expected_output": {
+      "category": "security_access_issue",
+      "priority": "high",
+      "assigned_team": "security_support",
+      "next_action_keywords": ["sso", "access", "audit"]
+    }
+  },
+  {
+    "task_id": "hard_3",
+    "difficulty": "hard",
+    "customer_type": "business",
+    "product": "analytics suite",
+    "message": "Since yesterday's release, scheduled reports are delayed, live dashboards show stale data, and our operations team says alerts are triggering too late.",
+    "previous_status": "investigating",
+    "expected_output": {
+      "category": "data_pipeline_issue",
+      "priority": "high",
+      "assigned_team": "data_operations_support",
+      "next_action_keywords": ["reports", "stale", "alerts"]
+    }
+  }
+]
