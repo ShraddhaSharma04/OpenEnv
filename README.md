@@ -50,7 +50,7 @@ Example state:
   "message": "App crashes every time I try to log in.",
   "previous_status": "open"
 }
-=======
+
 #Customer Support Ticket Triage OpenEnv
 
 This project is a real-world OpenEnv environment for AI agent to learn customer support ticket triage.
