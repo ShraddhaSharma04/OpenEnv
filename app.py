@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI, HTTPException
 
 from envs.ticket_triage_env import TicketTriageEnv
@@ -20,9 +21,10 @@ def root():
 
 
 @app.post("/reset", response_model=StateResponse)
-def reset_environment(request: ResetRequest):
+def reset_environment(request: Optional[ResetRequest] = None):
     try:
-        state = env.reset(request.difficulty)
+        difficulty = request.difficulty if request else "easy"
+        state = env.reset(difficulty)
         return state
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
