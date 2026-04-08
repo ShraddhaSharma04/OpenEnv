@@ -41,13 +41,11 @@ def build_prompt(task_state: Dict) -> str:
     state = task_state["state"]
     return f"""
 You are a customer support triage agent.
-
 Return ONLY valid JSON with exactly these keys:
 category
 priority
 assigned_team
 next_action
-
 Ticket:
 customer_type: {state["customer_type"]}
 product: {state["product"]}
