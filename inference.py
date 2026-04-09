@@ -53,99 +53,20 @@ message: {state["message"]}
 previous_status: {state["previous_status"]}
 """.strip()
 
-
-def fallback_action(task_state: Dict) -> Dict:
-    message = task_state["state"]["message"].lower()
-
-    if "charged twice" in message or "refund" in message:
-        return {
-            "category": "billing_issue",
-            "priority": "high",
-            "assigned_team": "billing_support",
-            "next_action": "Investigate the double charge and process a refund for the duplicate payment."
-        }
-    if "forgot my password" in message or "cannot sign in" in message:
-        return {
-            "category": "account_access",
-            "priority": "medium",
-            "assigned_team": "account_support",
-            "next_action": "Help the user reset the password and restore sign in access."
-        }
-    if "crashes" in message or "log in" in message:
-        return {
-            "category": "technical_issue",
-            "priority": "medium",
-            "assigned_team": "app_support",
-            "next_action": "Reproduce the login crash and investigate the issue."
-        }
-    if "premium" in message and "export reports" in message:
-        return {
-            "category": "account_access",
-            "priority": "high",
-            "assigned_team": "subscription_support",
-            "next_action": "Check premium plan activation, export permissions, and account access."
-        }
-    if "pdf fails" in message or "recent update" in message:
-        return {
-            "category": "technical_issue",
-            "priority": "high",
-            "assigned_team": "platform_support",
-            "next_action": "Investigate the invoice PDF failure after the recent update."
-        }
-    if "plan" in message and "features" in message:
-        return {
-            "category": "subscription_issue",
-            "priority": "medium",
-            "assigned_team": "subscription_support",
-            "next_action": "Verify the plan change sync and unlock the correct features."
-        }
-    if "role-based access" in message or "dashboard is unusually slow" in message:
-        return {
-            "category": "enterprise_platform_issue",
-            "priority": "high",
-            "assigned_team": "enterprise_tech_support",
-            "next_action": "Investigate role access changes, invoice export failure, and dashboard latency."
-        }
-    if "sso" in message or "audit logs" in message:
-        return {
-            "category": "security_access_issue",
-            "priority": "high",
-            "assigned_team": "security_support",
-            "next_action": "Check the SSO configuration, restore access, and inspect missing audit logs."
-        }
-    if "scheduled reports" in message or "stale data" in message or "alerts" in message:
-        return {
-            "category": "data_pipeline_issue",
-            "priority": "high",
-            "assigned_team": "data_operations_support",
-            "next_action": "Investigate delayed reports, stale dashboards, and alerting delays."
-        }
-
-    return {
-        "category": "technical_issue",
-        "priority": "medium",
-        "assigned_team": "platform_support",
-        "next_action": "Investigate the issue and gather more details."
-    }
-
-
 def get_model_action(client: OpenAI, task_state: Dict) -> Dict:
     prompt = build_prompt(task_state)
-    try:
-        completion = client.chat.completions.create(
-            model=MODEL_NAME,
-            messages=[
-                {"role": "system", "content": "Return only valid JSON."},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0,
-            max_tokens=200,
-            stream=False,
-        )
-        text = (completion.choices[0].message.content or "").strip()
-        return json.loads(text)
-    except Exception:
-        return fallback_action(task_state)
+    completion = client.chat.completions.create(
+        model=MODEL_NAME,
+        messages=[
+            {"role": "system", "content": "Return only valid JSON."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0,
+        max_tokens=200,
+        stream=False,
+    )
+    text = (completion.choices[0].message.content or "").strip()
+    return json.loads(text)
 
 
 def run_episode(client: OpenAI, difficulty: str) -> None:
