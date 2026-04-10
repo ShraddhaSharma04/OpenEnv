@@ -1,6 +1,6 @@
 name: customer-support-ticket-triage-openenv
 version: "1.0.0"
-description: A real-world OpenEnv environment for customer support ticket triage.
+description: "A real-world OpenEnv environment for customer support ticket triage."
 
 environment:
   base_url: https://shraddhasharma24-openenv.hf.space
@@ -21,17 +21,17 @@ action_space:
   fields:
     category:
       type: string
-      description: Predicted issue category
+      description: "Predicted issue category"
     priority:
       type: string
       enum: [low, medium, high]
-      description: Predicted priority level
+      description: "Predicted priority level"
     assigned_team:
       type: string
-      description: Team assigned to the ticket
+      description: "Team assigned to the ticket"
     next_action:
       type: string
-      description: Suggested next action for support handling
+      description: "Suggested next action for support handling"
 
 observation_space:
   type: object
@@ -46,8 +46,8 @@ observation_space:
       type: string
 
 reward:
-  range: [0.0, 1.0]
-  description: Weighted score based on category, priority, assigned team, and next action keyword matching.
+  range: [0.01, 0.99]
+  description: "Weighted score based on category, priority, assigned team, and next action keyword matching."
 
 inference:
   script: inference.py
