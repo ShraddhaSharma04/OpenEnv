@@ -3,15 +3,12 @@ import os
 from typing import Dict, List, Optional
 
 import requests
-from dotenv import load_dotenv
 from openai import OpenAI
-
-load_dotenv()
 
 API_BASE_URL = os.environ["API_BASE_URL"]
 API_KEY = os.environ["API_KEY"]
-MODEL_NAME = os.environ.get("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
-ENV_BASE_URL = os.getenv("ENV_BASE_URL", "http://127.0.0.1:8000")
+MODEL_NAME = os.environ["MODEL_NAME"]
+ENV_BASE_URL = os.environ["ENV_BASE_URL"]
 
 BENCHMARK = os.getenv("BENCHMARK", "customer-support-ticket-triage-openenv")
 DIFFICULTIES = ["easy", "medium", "hard"]
@@ -52,22 +49,6 @@ product: {state["product"]}
 message: {state["message"]}
 previous_status: {state["previous_status"]}
 """.strip()
-
-def get_model_action(client: OpenAI, task_state: Dict) -> Dict:
-    prompt = build_prompt(task_state)
-    completion = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=[
-            {"role": "system", "content": "Return only valid JSON."},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0,
-        max_tokens=200,
-        stream=False,
-    )
-    text = (completion.choices[0].message.content or "").strip()
-    return json.loads(text)
-
 
 def run_episode(client: OpenAI, difficulty: str) -> None:
     rewards: List[float] = []
@@ -118,8 +99,22 @@ def run_episode(client: OpenAI, difficulty: str) -> None:
         log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
 
 
+def warmup_llm(client: OpenAI) -> None:
+    client.chat.completions.create(
+        model=MODEL_NAME,
+        messages=[
+            {"role": "system", "content": "Reply with exactly: ok"},
+            {"role": "user", "content": "ok"},
+        ],
+        temperature=0,
+        max_tokens=2,
+        stream=False,
+    )
+
+
 def main() -> None:
     client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+    warmup_llm(client)
     for difficulty in DIFFICULTIES:
         run_episode(client, difficulty)
 
